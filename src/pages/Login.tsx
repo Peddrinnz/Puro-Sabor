@@ -58,7 +58,7 @@ const Login: React.FC = () => {
               {showPassword ? <FiEyeOff className="h-5 w-5" /> : <FiEye className="h-5 w-5" />}
             </button>
           </label>
-          <button type="submit" className="rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 px-5 py-4 text-sm font-semibold text-slate-950 transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70" disabled={loading}>
+          <button type="submit" className="rounded-full bg-linear-to-r from-cyan-500 to-teal-400 px-5 py-4 text-sm font-semibold text-slate-950 transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70" disabled={loading}>
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
           <div className="text-center text-sm text-slate-500">
