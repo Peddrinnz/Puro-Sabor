@@ -2,15 +2,41 @@
 
 :root {
   color-scheme: light;
+
+  --app-background: #f8fafc;
+  --app-surface: rgba(255, 255, 255, 0.92);
+  --app-surface-soft: rgba(255, 255, 255, 0.78);
+  --app-border: rgba(15, 23, 42, 0.12);
+
+  --app-text: #0f172a;
+  --app-muted: #475569;
+
+  --app-accent: #0891b2;
+  --app-accent-soft: rgba(8, 145, 178, 0.12);
+
+  font-family:
+    "Inter",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.dark {
+  color-scheme: dark;
+
   --app-background: #020617;
   --app-surface: rgba(15, 23, 42, 0.92);
   --app-surface-soft: rgba(15, 23, 42, 0.72);
   --app-border: rgba(148, 163, 184, 0.16);
+
   --app-text: #e2e8f0;
   --app-muted: #94a3b8;
+
   --app-accent: #22d3ee;
   --app-accent-soft: rgba(34, 211, 238, 0.12);
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 @layer base {
@@ -26,23 +52,37 @@
   body {
     margin: 0;
     min-height: 100%;
-    background: radial-gradient(circle at top left, rgba(34, 211, 238, 0.14), transparent 15%),
-      radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.1), transparent 18%),
-      linear-gradient(180deg, #020617 0%, #07101f 100%);
+
+    background: var(--app-background);
     color: var(--app-text);
+
     font-smooth: always;
     -webkit-font-smoothing: antialiased;
-    transition: background-color 0.2s ease, color 0.2s ease;
+
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .dark body {
+    background:
+      radial-gradient(circle at top left, rgba(34, 211, 238, 0.14), transparent 15%),
+      radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.1), transparent 18%),
+      linear-gradient(180deg, #020617 0%, #07101f 100%);
   }
 
   body::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle at 30% 10%, rgba(34, 211, 238, 0.08), transparent 20%),
-      radial-gradient(circle at 80% 15%, rgba(96, 165, 250, 0.08), transparent 18%);
     pointer-events: none;
     z-index: -1;
+  }
+
+  .dark body::before {
+    background-image:
+      radial-gradient(circle at 30% 10%, rgba(34, 211, 238, 0.08), transparent 20%),
+      radial-gradient(circle at 80% 15%, rgba(96, 165, 250, 0.08), transparent 18%);
   }
 
   a {
@@ -73,12 +113,11 @@
   textarea,
   select {
     border-radius: 1.25rem;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid var(--app-border);
+    background: var(--app-surface);
     padding: 0.9rem 1rem;
     color: var(--app-text);
     outline: none;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.03);
   }
 
   input:focus,
@@ -89,19 +128,18 @@
   }
 
   ::placeholder {
-    color: rgba(226, 232, 240, 0.56);
+    color: var(--app-muted);
   }
 
   .surface {
-    background: rgba(15, 23, 42, 0.92);
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    box-shadow: 0 30px 80px -40px rgba(15, 23, 42, 0.45);
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
     backdrop-filter: blur(18px);
   }
 
   .surface-soft {
-    background: rgba(15, 23, 42, 0.78);
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    background: var(--app-surface-soft);
+    border: 1px solid var(--app-border);
     backdrop-filter: blur(16px);
   }
 
@@ -113,9 +151,9 @@
   }
 
   .button-secondary {
-    background: rgba(15, 23, 42, 0.88);
-    color: #cbd5e1;
-    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: var(--app-surface);
+    color: var(--app-text);
+    border: 1px solid var(--app-border);
     border-radius: 9999px;
   }
 }
@@ -129,4 +167,68 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.25rem;
+}
+
+.card-app {
+  background: var(--app-surface);
+  color: var(--app-text);
+  border: 1px solid var(--app-border);
+  border-radius: 2rem;
+  box-shadow: 0 25px 60px -30px rgba(15, 23, 42, 0.3);
+}
+
+.card-soft {
+  background: var(--app-surface-soft);
+  color: var(--app-text);
+  border: 1px solid var(--app-border);
+  border-radius: 1.5rem;
+}
+
+.input-app {
+  width: 100%;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.label-app {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--app-text);
+}
+
+.text-muted {
+  color: var(--app-muted);
+}
+
+.button-app {
+  border-radius: 9999px;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.button-app-primary {
+  background: linear-gradient(
+    135deg,
+    #0ea5e9,
+    #22d3ee
+  );
+  color: #0f172a;
+}
+
+.button-app-primary:hover {
+  filter: brightness(1.05);
+}
+
+.button-app-dark {
+  background: var(--app-surface);
+  color: var(--app-text);
+  border: 1px solid var(--app-border);
+}
+
+.button-app-dark:hover {
+  filter: brightness(1.1);
 }

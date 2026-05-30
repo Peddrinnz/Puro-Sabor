@@ -120,7 +120,6 @@ const Checkout: React.FC = () => {
         city: profileAddress.city || '',
         zipCode: profileAddress.zipCode || '',
       })
-      // prefill but keep inputs locked until user chooses to edit
       setEditingAddress(false)
     } else {
       setEditingAddress(true)
@@ -130,18 +129,18 @@ const Checkout: React.FC = () => {
   return (
     <main className="container-app py-8">
       <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
-        <section className="rounded-3xl bg-white p-8 shadow-sm">
+        <section className="rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900 dark:text-slate-100">
           <h1 className="text-3xl font-semibold mb-4">Carrinho</h1>
           {items.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-slate-300 p-8 text-center text-slate-600">Sem itens no carrinho.</div>
           ) : (
             <div className="space-y-4">
               {items.map((item) => (
-                <div key={item.pizza._id} className="rounded-3xl border border-slate-200 p-4">
+                <div key={item.pizza._id} className="rounded-3xl border border-slate-200 p-4 dark:border-slate-700 dark:bg-slate-800/50">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <h2 className="text-lg font-semibold">{item.pizza.name}</h2>
-                      <p className="text-sm text-slate-500">R$ {item.pizza.price.toFixed(2)} cada</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">R$ {item.pizza.price.toFixed(2)} cada</p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
                       <button type="button" onClick={() => updateQuantity(item.pizza._id, item.quantity - 1)} className="rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-slate-700 hover:bg-slate-200">-</button>
@@ -156,7 +155,7 @@ const Checkout: React.FC = () => {
           )}
         </section>
 
-        <aside className="rounded-3xl bg-white p-8 shadow-sm">
+        <aside className="rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900 dark:text-slate-100">
           <h2 className="text-2xl font-semibold mb-4">Local de entrega</h2>
           <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-4">
             {user && Array.isArray(user.addresses) && user.addresses.length > 0 && (
@@ -164,10 +163,9 @@ const Checkout: React.FC = () => {
                 <div className="text-sm text-slate-500">Usando endereço do perfil</div>
                 <div className="flex items-center gap-2">
                   {!editingAddress ? (
-                    <button type="button" onClick={() => setEditingAddress(true)} className="rounded-full border border-slate-300 px-3 py-1 text-sm transition hover:bg-slate-100">Editar</button>
+                    <button type="button" onClick={() => setEditingAddress(true)} className="rounded-full border border-slate-300 px-3 py-1 text-sm transition hover:bg-teal-600">Editar</button>
                   ) : (
                     <button type="button" onClick={() => {
-                      // reset to profile address and stop editing
                       const profileAddress = user.addresses![0]
                       setAddress({
                         street: profileAddress.street || '',
@@ -194,7 +192,7 @@ const Checkout: React.FC = () => {
                 type="button"
                 onClick={handleLookupCep}
                 disabled={cepLoading}
-                className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-white transition hover:bg-slate-800 disabled:opacity-60"
+                className="inline-flex items-center justify-center rounded-2xl bg-teal-600 px-4 py-3 text-white transition hover:bg-slate-800 disabled:opacity-60"
               >
                 {cepLoading ? 'Buscando CEP...' : 'Buscar CEP'}
               </button>

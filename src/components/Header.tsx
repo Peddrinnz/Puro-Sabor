@@ -12,10 +12,10 @@ const Header: React.FC = () => {
   const nav = useNavigate()
 
   const isDark = theme === 'dark'
-  const headerClasses = 'border-b border-white/10 bg-[rgba(4,12,30,0.85)]/95 text-slate-100 shadow-[0_25px_80px_-40px_rgba(0,0,0,0.45)]'
-  const linkClasses = 'text-slate-200 transition hover:bg-white/10'
-  const accentLinkClasses = 'text-cyan-300 drop-shadow-[0_1px_15px_rgba(34,211,238,0.45)]'
-  const themeToggleClasses = 'inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10'
+  const headerClasses = 'border-b border-slate-200 bg-white/90 text-slate-900 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/90 dark:text-slate-100'
+  const linkClasses = 'text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/10'
+  const accentLinkClasses = 'text-cyan-600 dark:text-cyan-300'
+  const themeToggleClasses = 'inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-700 transition hover:bg-slate-200 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:bg-white/10'
 
   return (
     <header className={`sticky top-0 z-30 w-full border-b backdrop-blur-xl shadow-sm p-2 ${headerClasses}`}>
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
           ) : (
             <>
               <Link to="/login" className={`rounded-full px-3 py-1 transition ${isDark ? 'hover:text-teal-200' : 'hover:text-teal-600'}`}>Entrar</Link>
-              <Link to="/register" className="rounded-full bg-teal-600 px-3 py-1 text-sm font-medium text-white transition hover:bg-teal-700">Registrar</Link>
+              <Link to="/register" className="rounded-full bg-cyan-600 px-3 py-1 text-sm font-medium text-white transition hover:bg-cyan-700">Registrar</Link>
             </>
           )}
         </nav>

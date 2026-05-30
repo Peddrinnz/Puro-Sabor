@@ -71,7 +71,7 @@ const Orders: React.FC = () => {
 
   return (
     <main className="container-app py-8 text-left">
-      <div className="rounded-4xl bg-white p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.2)]">
+      <div className="rounded-4xl bg-white p-8 dark:bg-slate-900 dark:text-slate-100 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.2)]">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">Histórico</p>

@@ -24,7 +24,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <BrowserRouter>
-            <div className="flex min-h-screen flex-col bg-transparent text-slate-100">
+            <div className="flex min-h-screen flex-col">
               <Header />
               <main className="flex-1 pt-24 pb-20">
                 <Routes>
