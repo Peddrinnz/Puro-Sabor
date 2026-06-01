@@ -129,7 +129,7 @@ const Checkout: React.FC = () => {
   return (
     <main className="container-app py-8">
       <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
-        <section className="rounded-3xl bg-slate-50/95 p-8 shadow-sm dark:bg-slate-900/95 dark:text-slate-100">
+        <section className="rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900 dark:text-slate-100">
           <h1 className="text-3xl font-semibold mb-4">Carrinho</h1>
           {items.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-slate-300 p-8 text-center text-slate-600">Sem itens no carrinho.</div>
@@ -155,7 +155,7 @@ const Checkout: React.FC = () => {
           )}
         </section>
 
-        <aside className="rounded-3xl bg-slate-50/95 p-8 shadow-sm dark:bg-slate-900/95 dark:text-slate-100">
+        <aside className="rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900 dark:text-slate-100">
           <h2 className="text-2xl font-semibold mb-4">Local de entrega</h2>
           <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-4">
             {user && Array.isArray(user.addresses) && user.addresses.length > 0 && (
@@ -175,7 +175,7 @@ const Checkout: React.FC = () => {
                         zipCode: profileAddress.zipCode || '',
                       })
                       setEditingAddress(false)
-                    }} className="rounded-full border border-slate-300 px-3 py-1 text-sm transition hover:bg-slate-100">Usar salvo</button>
+                    }} className="rounded-full border border-slate-300 px-3 py-1 text-sm transition hover:bg-slate-700">Usar salvo</button>
                   )}
                 </div>
               </div>
@@ -185,7 +185,7 @@ const Checkout: React.FC = () => {
                 value={address.zipCode}
                 onChange={(e) => setAddress((s) => ({ ...s, zipCode: e.target.value }))}
                 placeholder="CEP"
-                className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3"
+                className="w-full rounded-2xl border border-slate-300 px-4 py-3"
                 disabled={!editingAddress}
               />
               <button
@@ -201,7 +201,7 @@ const Checkout: React.FC = () => {
               value={address.street}
               onChange={(e) => setAddress((s) => ({ ...s, street: e.target.value }))}
               placeholder="Rua"
-              className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3"
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3"
               disabled={!editingAddress}
             />
             <div className="grid gap-3 sm:grid-cols-2">
@@ -209,14 +209,14 @@ const Checkout: React.FC = () => {
                 value={address.number}
                 onChange={(e) => setAddress((s) => ({ ...s, number: e.target.value }))}
                 placeholder="Número"
-                className="rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3"
+                className="rounded-2xl border border-slate-300 px-4 py-3"
                 disabled={!editingAddress}
               />
               <input
                 value={address.city}
                 onChange={(e) => setAddress((s) => ({ ...s, city: e.target.value }))}
                 placeholder="Cidade"
-                className="rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3"
+                className="rounded-2xl border border-slate-300 px-4 py-3"
                 disabled={!editingAddress}
               />
             </div>
@@ -224,7 +224,7 @@ const Checkout: React.FC = () => {
               value={address.complement}
               onChange={(e) => setAddress((s) => ({ ...s, complement: e.target.value }))}
               placeholder="Complemento (opcional)"
-              className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3"
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3"
               disabled={!editingAddress}
             />
             <div className="rounded-3xl bg-slate-50 p-5 text-slate-700">

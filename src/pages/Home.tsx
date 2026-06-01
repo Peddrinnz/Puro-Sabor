@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import api from '../services/api'
+import api, { getImageUrl } from '../services/api'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import type { Pizza } from '../types'
@@ -258,6 +258,17 @@ const Home: React.FC = () => {
 
             return (
               <article key={p._id} className="overflow-hidden rounded-4xl border border-slate-200 bg-white/95 shadow-[0_20px_45px_-25px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_25px_80px_-30px_rgba(0,0,0,0.15)] dark:border-white/10 dark:bg-slate-950/90 dark:shadow-[0_20px_45px_-25px_rgba(0,0,0,0.45)] dark:hover:shadow-[0_25px_80px_-30px_rgba(0,0,0,0.55)]">
+                <div className="h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  {getImageUrl(p.image) ? (
+                    <img
+                      src={getImageUrl(p.image)}
+                      alt={p.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Imagem não disponível</div>
+                  )}
+                </div>
                 <div className="bg-linear-to-r from-cyan-500 to-teal-400 p-6 text-slate-950 dark:text-slate-950">
                   <div className="flex items-start justify-between gap-4">
                     <div>

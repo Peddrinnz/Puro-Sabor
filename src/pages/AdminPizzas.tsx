@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import api from '../services/api'
+import api, { getImageUrl } from '../services/api'
 import type { Pizza } from '../types'
 
 const initialPizzaForm = {
@@ -8,6 +8,7 @@ const initialPizzaForm = {
   description: '',
   price: '',
   ingredients: '',
+  image: '',
   available: true,
 }
 
@@ -36,7 +37,17 @@ const AdminPizzas: React.FC = () => {
   const [deletingPizzaId, setDeletingPizzaId] = useState<string | null>(null)
   const [adminMessage, setAdminMessage] = useState<string | null>(null)
   const [form, setForm] = useState(initialPizzaForm)
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState('')
   const [editingPizzaId, setEditingPizzaId] = useState<string | null>(null)
+
+  React.useEffect(() => {
+    return () => {
+      if (imagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(imagePreview)
+      }
+    }
+  }, [imagePreview])
 
   const loadPizzas = async () => {
     setLoading(true)
@@ -57,7 +68,7 @@ const AdminPizzas: React.FC = () => {
     void loadPizzas()
   }, [])
 
-  const createPizza = async (pizzaData: Omit<Pizza, '_id'>) => {
+  const createPizza = async (pizzaData: Omit<Pizza, '_id'> | FormData) => {
     const routes = ['/pizzas', '/admin/pizzas']
     let latestError: unknown = null
 
@@ -73,7 +84,7 @@ const AdminPizzas: React.FC = () => {
     throw latestError
   }
 
-  const updatePizza = async (pizzaId: string, pizzaData: Partial<Pizza>) => {
+  const updatePizza = async (pizzaId: string, pizzaData: Partial<Pizza> | FormData) => {
     const routes = [`/pizzas/${pizzaId}`, `/admin/pizzas/${pizzaId}`]
     let latestError: unknown = null
 
@@ -83,6 +94,31 @@ const AdminPizzas: React.FC = () => {
         return res.data
       } catch (err) {
         latestError = err
+
+        // Some backends don't accept PUT with multipart/form-data. If we're
+        // sending FormData, try POST as a fallback to the same route.
+        try {
+          if (pizzaData instanceof FormData) {
+            // Try POST to the same route first (some servers accept POST).
+            try {
+              const postRes = await api.post(route, pizzaData)
+              return postRes.data
+            } catch (errPostSame) {
+              // If POST to /admin/pizzas/:id is rejected, try POST to the base
+              // collection route (e.g. /admin/pizzas) and include the id in the form.
+              const baseRoute = route.replace(new RegExp(`/${pizzaId}$`), '')
+              const copy = new FormData()
+              for (const [key, val] of (pizzaData as FormData).entries()) {
+                copy.append(key, val as any)
+              }
+              copy.append('_id', pizzaId)
+              const postRes2 = await api.post(baseRoute, copy)
+              return postRes2.data
+            }
+          }
+        } catch (err2) {
+          latestError = err2
+        }
       }
     }
 
@@ -107,6 +143,8 @@ const AdminPizzas: React.FC = () => {
 
   const resetForm = () => {
     setForm(initialPizzaForm)
+    setImageFile(null)
+    setImagePreview('')
     setEditingPizzaId(null)
   }
 
@@ -115,15 +153,31 @@ const AdminPizzas: React.FC = () => {
     setSavingPizza(true)
     setAdminMessage(null)
 
-    const payload = {
-      name: form.name.trim(),
-      description: form.description.trim(),
-      price: Number(form.price),
-      ingredients: form.ingredients
-        .split(',')
-        .map((ingredient) => ingredient.trim())
-        .filter(Boolean),
-      available: form.available,
+    const imageValue = form.image.trim()
+    const ingredients = form.ingredients
+      .split(',')
+      .map((ingredient) => ingredient.trim())
+      .filter(Boolean)
+    let payload: Omit<Pizza, '_id'> | FormData
+
+    if (imageFile) {
+      const formData = new FormData()
+      formData.append('name', form.name.trim())
+      formData.append('description', form.description.trim())
+      formData.append('price', String(Number(form.price)))
+      formData.append('available', String(form.available))
+      ingredients.forEach((ingredient) => formData.append('ingredients[]', ingredient))
+      formData.append('image', imageFile)
+      payload = formData
+    } else {
+      payload = {
+        name: form.name.trim(),
+        description: form.description.trim(),
+        price: Number(form.price),
+        ingredients,
+        image: imageValue || undefined,
+        available: form.available,
+      }
     }
 
     try {
@@ -138,8 +192,10 @@ const AdminPizzas: React.FC = () => {
       resetForm()
       await loadPizzas()
     } catch (err) {
-      console.error(err)
-      setAdminMessage('Não foi possível salvar a pizza. Verifique a API e tente novamente.')
+      console.error('Erro ao salvar pizza:', err)
+      const anyErr = err as any
+      const serverMessage = anyErr?.response?.data?.message || anyErr?.response?.data || anyErr?.message
+      setAdminMessage(serverMessage ? String(serverMessage) : 'Não foi possível salvar a pizza. Verifique a API e tente novamente.')
     } finally {
       setSavingPizza(false)
     }
@@ -152,8 +208,11 @@ const AdminPizzas: React.FC = () => {
       description: pizza.description,
       price: String(pizza.price),
       ingredients: pizza.ingredients.join(', '),
+      image: pizza.image ?? '',
       available: pizza.available ?? true,
     })
+    setImageFile(null)
+    setImagePreview(getImageUrl(pizza.image) ?? '')
   }
 
   const handleDeletePizza = async (pizzaId: string) => {
@@ -221,14 +280,14 @@ const AdminPizzas: React.FC = () => {
 
           <form onSubmit={handlePizzaSubmit} className="mt-5 space-y-3">
             <div className="grid gap-3 sm:grid-cols-2">
-<label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <span>Nome</span>
-              <input
-                value={form.name}
-                onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
-                required
-                placeholder="Ex: Marguerita"
-                className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
+              <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <span>Nome</span>
+                <input
+                  value={form.name}
+                  onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+                  required
+                  placeholder="Ex: Marguerita"
+                  className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 />
               </label>
 
@@ -242,7 +301,7 @@ const AdminPizzas: React.FC = () => {
                   onChange={(event) => setForm((current) => ({ ...current, price: event.target.value }))}
                   required
                   placeholder="Ex: 49.90"
-                  className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
+                  className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 />
               </label>
             </div>
@@ -255,7 +314,7 @@ const AdminPizzas: React.FC = () => {
                 onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
                 required
                 placeholder="Conte o sabor e diferencial da pizza"
-                className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
+                className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
 
@@ -267,9 +326,52 @@ const AdminPizzas: React.FC = () => {
                 onChange={(event) => setForm((current) => ({ ...current, ingredients: event.target.value }))}
                 required
                 placeholder="Separe por vírgulas"
-                className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
+                className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
+
+            <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <span>URL da imagem</span>
+              <input
+                type="url"
+                value={form.image}
+                onChange={(event) => {
+                  setForm((current) => ({ ...current, image: event.target.value }))
+                  setImageFile(null)
+                  setImagePreview(event.target.value)
+                }}
+                placeholder="https://...jpg"
+                className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+              />
+              <p className="text-xs text-slate-500 dark:text-slate-400">Ou envie uma imagem do seu computador abaixo.</p>
+            </label>
+
+            <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <span>Enviar imagem do PC</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(event) => {
+                  const file = event.target.files?.[0]
+                  if (!file) {
+                    setImageFile(null)
+                    setImagePreview('')
+                    return
+                  }
+
+                  setImageFile(file)
+                  setForm((current) => ({ ...current, image: '' }))
+                  setImagePreview(URL.createObjectURL(file))
+                }}
+                className="w-full rounded-3xl border mt-2 mb-4 border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition file:cursor-pointer file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:file:bg-slate-800 dark:file:text-slate-100"
+              />
+            </label>
+
+            {imagePreview && (
+              <div className="rounded-3xl border border-slate-200 bg-slate-100 p-0 dark:border-slate-700 dark:bg-slate-900">
+                <img src={imagePreview} alt="Preview da pizza" className="h-36 w-full object-cover" />
+              </div>
+            )}
 
             <label className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 border border-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700">
               <input
@@ -313,6 +415,15 @@ const AdminPizzas: React.FC = () => {
           <div className="mt-5 space-y-3">
             {pizzas.map((pizza) => (
               <article key={pizza._id} className="rounded-3xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800/70 dark:bg-slate-900/95 dark:text-slate-100">
+                {getImageUrl(pizza.image) && (
+                  <div className="mb-4 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
+                    <img
+                      src={getImageUrl(pizza.image)}
+                      alt={pizza.name}
+                      className="h-40 w-full object-cover"
+                    />
+                  </div>
+                )}
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">

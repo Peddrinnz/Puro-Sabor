@@ -94,7 +94,7 @@ const Profile: React.FC = () => {
   return (
     <main className="container-app py-16 text-left">
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <section className="rounded-4xl bg-slate-50/95 p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)] dark:bg-slate-950/95 dark:text-slate-100">
+        <section className="rounded-4xl bg-slate-50/95 p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)] dark:bg-slate-900 dark:text-slate-100">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-teal-700">Conta</p>
           <h1 className="mt-3 text-3xl font-semibold text-slate-950 dark:text-slate-100">Perfil</h1>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Gerencie suas informações pessoais e dados de entrega.</p>
@@ -135,7 +135,7 @@ const Profile: React.FC = () => {
           )}
         </section>
 
-        <section className="rounded-4xl bg-slate-50/95 p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)] dark:bg-slate-950/95 dark:text-slate-100">
+        <section className="rounded-4xl bg-slate-50/95 p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)] dark:bg-slate-900 dark:text-slate-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.25em] text-teal-700">Editar conta</p>

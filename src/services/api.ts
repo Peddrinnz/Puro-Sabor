@@ -6,10 +6,16 @@ const API_BASE = import.meta.env.DEV
 
 const api = axios.create({
   baseURL: API_BASE,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 })
+
+export function getImageUrl(image?: string | null): string {
+  if (!image) return ''
+  if (typeof image !== 'string') return ''
+  const trimmed = image.trim()
+  if (!trimmed) return ''
+  if (trimmed.startsWith('http') || trimmed.startsWith('data:') || trimmed.startsWith('/')) return trimmed
+  return `${API_BASE.replace(/\/$/, '')}/uploads/${trimmed}`
+}
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('puro_sabor_token')

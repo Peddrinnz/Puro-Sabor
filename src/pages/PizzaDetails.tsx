@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import api from '../services/api'
+import api, { getImageUrl } from '../services/api'
 import type { Pizza } from '../types'
 import { useCart } from '../context/CartContext'
 
@@ -52,32 +52,37 @@ const PizzaDetails: React.FC = () => {
 
   return (
     <main className="container-app py-8">
-      <div className="rounded-3xl bg-white p-8 shadow-sm">
-        <button onClick={() => nav(-1)} className="mb-6 text-sm text-slate-600 hover:text-slate-900">Voltar</button>
+      <div className="rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-950 dark:text-slate-100">
+        <button onClick={() => nav(-1)} className="mb-6 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">Voltar</button>
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <h1 className="text-4xl font-semibold text-slate-900">{pizza.name}</h1>
-            <p className="mt-4 text-slate-600">{pizza.description}</p>
+            {getImageUrl(pizza.image) ? (
+              <div className="mb-8 overflow-hidden rounded-4xl bg-slate-100 dark:bg-slate-900">
+                <img src={getImageUrl(pizza.image)} alt={pizza.name} className="h-80 w-full object-cover" />
+              </div>
+            ) : null}
+            <h1 className="text-4xl font-semibold text-slate-900 dark:text-white">{pizza.name}</h1>
+            <p className="mt-4 text-slate-600 dark:text-slate-300">{pizza.description}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {pizza.ingredients.map((ingredient) => (
                 <span key={ingredient} className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">{ingredient}</span>
               ))}
             </div>
           </div>
-          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
-            <div className="flex items-center justify-between text-slate-600">
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100">
+            <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
               <span>Preço unitário</span>
               <strong>R$ {pizza.price.toFixed(2)}</strong>
             </div>
             <div className="mt-4 flex items-center justify-between gap-3">
               <span className="text-sm text-slate-500">Quantidade</span>
-              <div className="flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-2">
+              <div className="flex items-center gap-2 rounded-full border border-slate-300 px-3 py-2">
                 <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-xl">-</button>
                 <span className="w-10 text-center text-lg font-semibold">{quantity}</span>
                 <button type="button" onClick={() => setQuantity(quantity + 1)} className="text-xl">+</button>
               </div>
             </div>
-            <div className="mt-6 flex items-center justify-between text-slate-700">
+            <div className="mt-6 flex items-center justify-between text-slate-300">
               <span>Total</span>
               <strong>R$ {totalPrice.toFixed(2)}</strong>
             </div>
