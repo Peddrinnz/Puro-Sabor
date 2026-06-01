@@ -94,32 +94,32 @@ const Profile: React.FC = () => {
   return (
     <main className="container-app py-16 text-left">
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <section className="rounded-4xl bg-white p-8  shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)]">
+        <section className="rounded-4xl bg-slate-50/95 p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)] dark:bg-slate-950/95 dark:text-slate-100">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-teal-700">Conta</p>
-          <h1 className="mt-3 text-3xl font-semibold text-slate-950">Perfil</h1>
-          <p className="mt-2 text-sm text-slate-600">Gerencie suas informações pessoais e dados de entrega.</p>
+          <h1 className="mt-3 text-3xl font-semibold text-slate-950 dark:text-slate-100">Perfil</h1>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Gerencie suas informações pessoais e dados de entrega.</p>
 
           {user ? (
             <div className="mt-6 space-y-4 text-slate-700">
-              <div className="rounded-3xl bg-slate-50 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Nome</p>
-                <p className="mt-2 text-lg font-semibold text-slate-900">{user.name}</p>
+              <div className="rounded-3xl bg-slate-50 p-4 dark:bg-slate-900 dark:text-slate-100 dark:border dark:border-slate-700">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Nome</p>
+                <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">{user.name}</p>
               </div>
-              <div className="rounded-3xl bg-slate-50 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Email atual</p>
-                <p className="mt-2 text-lg font-semibold text-slate-900">{user.email}</p>
+              <div className="rounded-3xl bg-slate-50 p-4 dark:bg-slate-900 dark:text-slate-100 dark:border dark:border-slate-700">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Email atual</p>
+                <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">{user.email}</p>
               </div>
-              <div className="rounded-3xl bg-slate-50 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Função</p>
-                <p className="mt-2 text-lg font-semibold text-slate-900">{user.role ?? 'Usuário'}</p>
+              <div className="rounded-3xl bg-slate-50 p-4 dark:bg-slate-900 dark:text-slate-100 dark:border dark:border-slate-700">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Função</p>
+                <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">{user.role ?? 'Usuário'}</p>
               </div>
 
               {user.addresses?.length ? (
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                  <h2 className="font-semibold text-slate-900">Endereço cadastrado</h2>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-600">
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+                  <h2 className="font-semibold text-slate-900 dark:text-slate-100">Endereço cadastrado</h2>
+                  <ul className="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-400">
                     {user.addresses.map((address, index) => (
-                      <li key={index} className="rounded-2xl bg-white px-3 py-2">
+                      <li key={index} className="rounded-2xl bg-slate-50 px-3 py-2 dark:bg-slate-950 dark:text-slate-100">
                         {address.street}, {address.number}
                         {address.complement ? ` (${address.complement})` : ''} — {address.city} • {address.zipCode}
                       </li>
@@ -127,7 +127,7 @@ const Profile: React.FC = () => {
                   </ul>
                 </div>
               ) : (
-                <p className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500">Nenhum endereço cadastrado ainda.</p>
+                <p className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">Nenhum endereço cadastrado ainda.</p>
               )}
             </div>
           ) : (
@@ -135,11 +135,11 @@ const Profile: React.FC = () => {
           )}
         </section>
 
-        <section className="rounded-4xl bg-white p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)]">
+        <section className="rounded-4xl bg-slate-50/95 p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)] dark:bg-slate-950/95 dark:text-slate-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.25em] text-teal-700">Editar conta</p>
-              <h2 className="mt-2 text-2xl font-semibold text-slate-950">Atualize seus dados</h2>
+              <h2 className="mt-2 text-2xl font-semibold text-slate-950 dark:text-slate-100">Atualize seus dados</h2>
             </div>
             <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">Privado</span>
           </div>
@@ -152,24 +152,24 @@ const Profile: React.FC = () => {
 
           <form onSubmit={handleUpdateProfile} className="mt-6 space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
-              <label className="space-y-2 text-sm font-medium text-slate-700">
+              <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <span>Email</span>
                 <input
                   type="email"
                   value={form.email}
                   onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
-                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-slate-900"
+                  className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   placeholder="email@exemplo.com"
                 />
               </label>
 
-              <label className="relative space-y-2 text-sm font-medium text-slate-700">
+              <label className="relative space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <span>Nova senha</span>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={form.password}
                   onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
-                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 pr-12 text-slate-900"
+                  className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 pr-12 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   placeholder="Deixe em branco para manter"
                 />
                 <button
@@ -184,65 +184,65 @@ const Profile: React.FC = () => {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <label className="space-y-2 text-sm font-medium text-slate-700">
+              <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <span>Rua</span>
                 <input
                   value={form.street}
                   onChange={(event) => setForm((current) => ({ ...current, street: event.target.value }))}
-                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-slate-900"
+                  className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   placeholder="Rua das Pizzas"
                 />
               </label>
 
-              <label className="space-y-2 text-sm font-medium text-slate-700">
+              <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <span>Número</span>
                 <input
                   value={form.number}
                   onChange={(event) => setForm((current) => ({ ...current, number: event.target.value }))}
-                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-slate-900"
+                  className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   placeholder="123"
                 />
               </label>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <label className="space-y-2 text-sm font-medium text-slate-700">
+              <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <span>Cidade</span>
                 <input
                   value={form.city}
                   onChange={(event) => setForm((current) => ({ ...current, city: event.target.value }))}
-                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-slate-900"
+                  className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   placeholder="São Paulo"
                 />
               </label>
 
-              <label className="space-y-2 text-sm font-medium text-slate-700">
+              <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <span>CEP</span>
                 <input
                   value={form.zipCode}
                   onChange={(event) => setForm((current) => ({ ...current, zipCode: event.target.value }))}
-                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-slate-900"
+                  className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   placeholder="01000-000"
                 />
               </label>
             </div>
 
-            <label className="space-y-2 text-sm font-medium text-slate-700">
+            <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
               <span>Complemento</span>
               <input
                 value={form.complement}
                 onChange={(event) => setForm((current) => ({ ...current, complement: event.target.value }))}
-                className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-slate-900"
+                className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 placeholder="Apto, Bloco, casa"
               />
             </label>
 
             <div className="flex items-center justify-between pt-2">
-              <p className="text-sm text-slate-500">A senha só será alterada se você preencher um novo valor.</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">A senha só será alterada se você preencher um novo valor.</p>
               <button
                 type="submit"
                 disabled={saving}
-                className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-slate-800 dark:hover:bg-slate-700"
               >
                 {saving ? 'Salvando...' : 'Salvar alterações'}
               </button>

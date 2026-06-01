@@ -175,7 +175,7 @@ const AdminPizzas: React.FC = () => {
   if (loading) {
     return (
       <main className="container-app py-8">
-        <div className="rounded-3xl bg-white p-8 text-center shadow-sm">Carregando pizzas...</div>
+        <div className="rounded-3xl bg-white p-8 text-center shadow-sm dark:bg-slate-950 dark:text-slate-100">Carregando pizzas...</div>
       </main>
     )
   }
@@ -192,7 +192,7 @@ const AdminPizzas: React.FC = () => {
 
           <div className="flex flex-wrap gap-3">
             <Link to="/admin" className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20">Voltar ao painel</Link>
-            <Link to="/admin/orders" className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition hover:bg-slate-100">Gerenciar pedidos</Link>
+            <Link to="/admin/orders" className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition hover:bg-slate-100 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">Gerenciar pedidos</Link>
           </div>
         </div>
       </section>
@@ -210,29 +210,29 @@ const AdminPizzas: React.FC = () => {
       )}
 
       <section className="mt-6 grid gap-6 xl:grid-cols-[0.95fr_1.05fr] items-start">
-        <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <article className="rounded-3xl border border-slate-200 bg-white p-6 text-slate-950 shadow-sm dark:border-slate-800/70 dark:bg-slate-950/95 dark:text-slate-100">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">Cadastro</p>
-              <h2 className="mt-2 text-2xl font-semibold text-slate-950">Formulário de sabor</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700 dark:text-teal-300">Cadastro</p>
+              <h2 className="mt-2 text-2xl font-semibold text-slate-950 dark:text-slate-100">Formulário de sabor</h2>
             </div>
-            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{editingPizzaId ? 'Editando' : 'Novo'}</span>
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-100">{editingPizzaId ? 'Editando' : 'Novo'}</span>
           </div>
 
           <form onSubmit={handlePizzaSubmit} className="mt-5 space-y-3">
             <div className="grid gap-3 sm:grid-cols-2">
-              <label className="space-y-2 text-sm font-medium text-slate-700">
-                <span>Nome</span>
-                <input
-                  value={form.name}
-                  onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
-                  required
-                  placeholder="Ex: Marguerita"
-                  className="w-full"
+<label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <span>Nome</span>
+              <input
+                value={form.name}
+                onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+                required
+                placeholder="Ex: Marguerita"
+                className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
                 />
               </label>
 
-              <label className="space-y-2 text-sm font-medium text-slate-700">
+              <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <span>Preço</span>
                 <input
                   type="number"
@@ -242,12 +242,12 @@ const AdminPizzas: React.FC = () => {
                   onChange={(event) => setForm((current) => ({ ...current, price: event.target.value }))}
                   required
                   placeholder="Ex: 49.90"
-                  className="w-full"
+                  className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
                 />
               </label>
             </div>
 
-            <label className="space-y-2 text-sm font-medium text-slate-700">
+            <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
               <span>Descrição</span>
               <textarea
                 rows={3}
@@ -255,11 +255,11 @@ const AdminPizzas: React.FC = () => {
                 onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
                 required
                 placeholder="Conte o sabor e diferencial da pizza"
-                className="w-full"
+                className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
 
-            <label className="space-y-2 text-sm font-medium text-slate-700">
+            <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
               <span>Ingredientes</span>
               <textarea
                 rows={2}
@@ -267,11 +267,11 @@ const AdminPizzas: React.FC = () => {
                 onChange={(event) => setForm((current) => ({ ...current, ingredients: event.target.value }))}
                 required
                 placeholder="Separe por vírgulas"
-                className="w-full"
+                className="w-full bg-white dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
 
-            <label className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 border border-slate-200">
+            <label className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 border border-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700">
               <input
                 type="checkbox"
                 checked={form.available}
@@ -293,7 +293,7 @@ const AdminPizzas: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                  className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800"
                 >
                   Cancelar
                 </button>
@@ -302,31 +302,30 @@ const AdminPizzas: React.FC = () => {
           </form>
         </article>
 
-        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="rounded-3xl border border-slate-200 bg-white p-6 text-slate-950 shadow-sm dark:border-slate-800/70 dark:bg-slate-950/95 dark:text-slate-100">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">Menu</p>
-              <h2 className="mt-2 text-2xl font-semibold text-slate-950">Sabores cadastrados</h2>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700 dark:text-teal-300">Menu</p>
+                <h2 className="mt-2 text-2xl font-semibold text-slate-950 dark:text-slate-100">Sabores cadastrados</h2>
+              </div>
+              <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-700 dark:bg-teal-900/60 dark:text-teal-100">{pizzas.length} sabores</span>
             </div>
-            <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-700">{pizzas.length} sabores</span>
-          </div>
-
           <div className="mt-5 space-y-3">
             {pizzas.map((pizza) => (
-              <article key={pizza._id} className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+              <article key={pizza._id} className="rounded-3xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800/70 dark:bg-slate-900/95 dark:text-slate-100">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-lg font-semibold text-slate-900">{pizza.name}</p>
-                      <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ${pizza.available === false ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                      <p className="text-lg font-semibold text-slate-900 dark:text-slate-100">{pizza.name}</p>
+                      <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ${pizza.available === false ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-100' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-100'}`}>
                         {pizza.available === false ? 'Indisponível' : 'Disponível'}
                       </span>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{pizza.description}</p>
-                    <p className="mt-2 text-sm text-slate-600">Ingredientes: {pizza.ingredients.join(', ')}</p>
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{pizza.description}</p>
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Ingredientes: {pizza.ingredients.join(', ')}</p>
                   </div>
                   <div className="text-left sm:text-right">
-                    <p className="text-lg font-bold text-slate-900">R$ {pizza.price.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-slate-900 dark:text-slate-100">R$ {pizza.price.toFixed(2)}</p>
                   </div>
                 </div>
 

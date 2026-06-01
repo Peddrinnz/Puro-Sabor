@@ -180,20 +180,20 @@ const Home: React.FC = () => {
   return (
     <main className="container-app py-10">
       <section className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
-        <div className="rounded-4xl bg-slate-950/90 p-8 text-white shadow-[0_25px_60px_-30px_rgba(0,0,0,0.45)]">
-          <span className="inline-flex rounded-full bg-cyan-500/15 px-4 py-2 text-xs uppercase tracking-[0.35em] text-cyan-200">Cardápio moderno</span>
+        <div className="rounded-4xl bg-white/90 p-8 text-slate-950 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.15)] dark:bg-slate-950/90 dark:text-white dark:shadow-[0_25px_60px_-30px_rgba(0,0,0,0.45)]">
+          <span className="inline-flex rounded-full bg-cyan-500/15 px-4 py-2 text-xs uppercase tracking-[0.35em] text-cyan-800 dark:text-cyan-200">Cardápio moderno</span>
           <h1 className="mt-6 text-4xl font-bold leading-tight sm:text-5xl">Explore nossas pizzas artesanais e peça em poucos segundos.</h1>
           <p className="mt-5 max-w-2xl text-base leading-8 text-cyan-100/80">Filtros rápidos, favoritos salvos e um carrinho pensado para a melhor experiência de pedido no app.</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[1.75rem] bg-white/5 p-5">
-              <p className="text-sm uppercase tracking-[0.2em] text-cyan-200">Disponíveis</p>
+            <div className="rounded-[1.75rem] bg-slate-50 p-5 dark:bg-white/5">
+              <p className="text-sm uppercase tracking-[0.2em] text-cyan-800 dark:text-cyan-200">Disponíveis</p>
               <p className="mt-3 text-3xl font-semibold">{pizzas.length}</p>
-              <p className="mt-2 text-sm text-slate-300">sabores no cardápio</p>
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-300">sabores no cardápio</p>
             </div>
-            <div className="rounded-[1.75rem] bg-white/5 p-5">
-              <p className="text-sm uppercase tracking-[0.2em] text-cyan-200">Favoritos</p>
+            <div className="rounded-[1.75rem] bg-slate-50 p-5 dark:bg-white/5">
+              <p className="text-sm uppercase tracking-[0.2em] text-cyan-800 dark:text-cyan-200">Favoritos</p>
               <p className="mt-3 text-3xl font-semibold">{favoriteIds.length}</p>
-              <p className="mt-2 text-sm text-slate-300">pizzas salvas</p>
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-300">pizzas salvas</p>
             </div>
           </div>
           <div className="mt-8 flex flex-wrap gap-4">
@@ -202,21 +202,21 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <aside className="rounded-4xl bg-white/95 p-8 text-slate-950 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.25)]">
+        <aside className="rounded-4xl bg-white/95 p-8 text-slate-950 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.25)] dark:bg-slate-900/95 dark:text-slate-100">
           <h2 className="text-2xl font-semibold">Nosso local</h2>
-          <p className="mt-3 text-sm text-slate-600">Localizado no coração da cidade, nosso espaço oferece atendimento rápido e ambiente descontraído.</p>
+          <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Localizado no coração da cidade, nosso espaço oferece atendimento rápido e ambiente descontraído.</p>
           <div className="mt-6 space-y-4">
-            <div className="rounded-3xl bg-slate-50 p-5">
+            <div className="rounded-3xl bg-slate-50 p-5 dark:bg-slate-900 dark:text-slate-100">
               <p className="text-xs uppercase tracking-[0.2em] text-teal-600">Endereço</p>
               <p className="mt-2 font-semibold">Rua das Pizzas, 123</p>
-              <p className="text-sm text-slate-500">São Paulo - SP</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">São Paulo - SP</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl bg-slate-50 p-5">
+              <div className="rounded-3xl bg-slate-50 p-5 dark:bg-slate-900 dark:text-slate-100">
                 <p className="text-xs uppercase tracking-[0.2em] text-teal-600">Seg-sex</p>
                 <p className="mt-2 font-semibold">11:00 - 23:00</p>
               </div>
-              <div className="rounded-3xl bg-slate-50 p-5">
+              <div className="rounded-3xl bg-slate-50 p-5 dark:bg-slate-900 dark:text-slate-100">
                 <p className="text-xs uppercase tracking-[0.2em] text-teal-600">Sábado</p>
                 <p className="mt-2 font-semibold">12:00 - 00:00</p>
               </div>
@@ -237,18 +237,18 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      <section className="mt-10 rounded-4xl bg-white p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.18)]">
+      <section className="mt-10 rounded-4xl bg-white p-8 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.18)] dark:bg-slate-900 dark:text-slate-100">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.2em] text-teal-600">Menu principal</p>
-            <h2 className="mt-3 text-3xl font-semibold text-slate-950">Descubra a sua próxima pizza</h2>
+            <h2 className="mt-3 text-3xl font-semibold text-slate-950 dark:text-slate-100">Descubra a sua próxima pizza</h2>
           </div>
-          <p className="max-w-xl text-sm text-slate-500">Navegue pelo cardápio completo, veja detalhes das receitas e encontre combinações que combinam com seu gosto.</p>
+          <p className="max-w-xl text-sm text-slate-500 dark:text-slate-400">Navegue pelo cardápio completo, veja detalhes das receitas e encontre combinações que combinam com seu gosto.</p>
         </div>
       </section>
 
       {loading ? (
-        <div className="mt-8 rounded-4xl bg-white p-12 text-center text-slate-500 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.12)]">Carregando pizzas...</div>
+        <div className="mt-8 rounded-4xl bg-white p-12 text-center text-slate-500 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.12)] dark:bg-slate-900 dark:text-slate-300">Carregando pizzas...</div>
       ) : error ? (
         <div className="mt-8 rounded-4xl border border-red-200 bg-red-50 p-8 text-red-700 shadow-sm">{error}</div>
       ) : (
@@ -257,8 +257,8 @@ const Home: React.FC = () => {
             const isFavorite = favoriteIds.includes(p._id)
 
             return (
-              <article key={p._id} className="overflow-hidden rounded-4xl border border-white/10 bg-slate-950/90 shadow-[0_20px_45px_-25px_rgba(0,0,0,0.45)] transition hover:-translate-y-0.5 hover:shadow-[0_25px_80px_-30px_rgba(0,0,0,0.55)]">
-                <div className="bg-linear-to-r from-cyan-500 to-teal-400 p-6 text-slate-950">
+              <article key={p._id} className="overflow-hidden rounded-4xl border border-slate-200 bg-white/95 shadow-[0_20px_45px_-25px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_25px_80px_-30px_rgba(0,0,0,0.15)] dark:border-white/10 dark:bg-slate-950/90 dark:shadow-[0_20px_45px_-25px_rgba(0,0,0,0.45)] dark:hover:shadow-[0_25px_80px_-30px_rgba(0,0,0,0.55)]">
+                <div className="bg-linear-to-r from-cyan-500 to-teal-400 p-6 text-slate-950 dark:text-slate-950">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-xs uppercase tracking-[0.25em] text-slate-700">Especial</p>

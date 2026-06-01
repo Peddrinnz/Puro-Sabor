@@ -70,17 +70,17 @@ const AdminOrders: React.FC = () => {
     const normalized = normalizeStatus(status)
     switch (normalized) {
       case 'completed':
-        return 'bg-emerald-100 text-emerald-700'
+        return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-100'
       case 'preparing':
-        return 'bg-amber-100 text-amber-700'
+        return 'bg-amber-100 text-amber-700 dark:bg-amber-900/60 dark:text-amber-100'
       case 'on_the_way':
-        return 'bg-cyan-100 text-cyan-700'
+        return 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/60 dark:text-cyan-100'
       case 'delivered':
-        return 'bg-blue-100 text-blue-700'
+        return 'bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-100'
       case 'cancelled':
-        return 'bg-rose-100 text-rose-700'
+        return 'bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-100'
       default:
-        return 'bg-slate-100 text-slate-700'
+        return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-100'
     }
   }
 
@@ -172,7 +172,7 @@ const AdminOrders: React.FC = () => {
   if (loading) {
     return (
       <main className="container-app py-8">
-        <div className="rounded-3xl bg-white p-8 text-center shadow-sm">Carregando pedidos...</div>
+        <div className="rounded-3xl bg-white p-8 text-center shadow-sm dark:bg-slate-950 dark:text-slate-100">Carregando pedidos...</div>
       </main>
     )
   }
@@ -189,7 +189,7 @@ const AdminOrders: React.FC = () => {
 
           <div className="flex flex-wrap gap-3">
             <Link to="/admin" className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20">Voltar ao painel</Link>
-            <Link to="/admin/pizzas" className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition hover:bg-slate-100">Gerenciar pizzas</Link>
+            <Link to="/admin/pizzas" className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition hover:bg-slate-100 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">Gerenciar pizzas</Link>
           </div>
         </div>
       </section>
@@ -206,35 +206,36 @@ const AdminOrders: React.FC = () => {
         </div>
       )}
 
-      <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 text-slate-950 shadow-sm dark:border-slate-800/70 dark:bg-slate-950/95 dark:text-slate-100">
         <div className="mb-5 flex items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">Controle de pedidos</p>
-            <h2 className="mt-2 text-2xl font-semibold text-slate-950">Atualização de status</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700 dark:text-teal-300">Controle de pedidos</p>
+            <h2 className="mt-2 text-2xl font-semibold text-slate-950 dark:text-slate-100">Atualização de status</h2>
           </div>
           <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-700">{orders.length} no total</span>
         </div>
 
         <div className="space-y-3">
           {orders.length === 0 ? (
-            <div className="rounded-3xl bg-slate-50 p-6 text-slate-600">Nenhum pedido encontrado.</div>
+            <div className="rounded-3xl bg-slate-50 p-6 text-slate-600 dark:bg-slate-900 dark:text-slate-100">Nenhum pedido encontrado.</div>
           ) : (
             orders.map((order) => (
-              <article key={order._id} className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+              <article key={order._id} className="rounded-3xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800/70 dark:bg-slate-900/95 dark:text-slate-100">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-sm font-semibold text-slate-500">Pedido #{order._id}</p>
-                    <p className="mt-2 text-lg font-semibold text-slate-900">Total R$ {order.total.toFixed(2)}</p>
-                    <p className="mt-1 text-sm text-slate-500">{order.items.length} item(s) • entrega {order.deliveryFee ? `R$ ${order.deliveryFee.toFixed(2)}` : 'grátis'}</p>
+                    <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">Pedido #{order._id}</p>
+                    <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">Total R$ {order.total.toFixed(2)}</p>
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{order.items.length} item(s) • entrega {order.deliveryFee ? `R$ ${order.deliveryFee.toFixed(2)}` : 'grátis'}</p>
                   </div>
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold ${statusBadgeClass(order.status)}`}>
                     {statusLabel(order.status)}
                   </span>
                 </div>
 
-                <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-white p-3 border border-slate-200 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-white p-3 border border-slate-200 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800/70 dark:bg-slate-950/90">
                   <select
                     value={normalizeStatus(order.status)}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-2 text-slate-700 sm:max-w-xs dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                     onChange={async (event) => {
                       const newStatus = event.target.value
                       setUpdatingOrderId(order._id)
@@ -251,7 +252,6 @@ const AdminOrders: React.FC = () => {
                       }
                     }}
                     disabled={updatingOrderId === order._id}
-                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-2 text-slate-700 sm:max-w-xs"
                   >
                     {statusOptions.map((option) => (
                       <option key={option.value} value={option.value}>{option.label}</option>
@@ -259,7 +259,7 @@ const AdminOrders: React.FC = () => {
                   </select>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-100">
                       {updatingOrderId === order._id ? 'Salvando...' : 'Selecione um status'}
                     </span>
                     <button

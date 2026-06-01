@@ -30,16 +30,16 @@ const Login: React.FC = () => {
 
   return (
     <main className="container-app py-16">
-      <div className="mx-auto max-w-md rounded-4xl bg-white p-10 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)]">
-        <h1 className="text-4xl font-semibold mb-4 text-slate-900">Entrar</h1>
-        {error && <div className="mb-4 rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</div>}
+      <div className="mx-auto max-w-md rounded-4xl bg-white/90 p-10 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.3)] border border-slate-200/80 dark:bg-slate-950/90 dark:border-slate-800/70 dark:text-slate-100">
+        <h1 className="text-4xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Entrar</h1>
+        {error && <div className="mb-4 rounded-xl bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200">{error}</div>}
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <label className="relative block">
             <input
               {...register('email')}
               type="email"
               placeholder="Email"
-              className="w-full rounded-3xl border border-slate-300 bg-slate-50 px-5 py-4 text-slate-900 outline-none transition focus:border-teal-500"
+              className="w-full rounded-3xl border border-slate-300 bg-white px-5 py-4 text-slate-900 outline-none transition focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             />
           </label>
           <label className="relative block">
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
               {...register('password')}
               type={showPassword ? 'text' : 'password'}
               placeholder="Senha"
-              className="w-full rounded-3xl border border-slate-300 bg-slate-50 px-5 py-4 pr-14 text-slate-900 outline-none transition focus:border-teal-500"
+              className="w-full rounded-3xl border border-slate-300 bg-slate-50 px-5 py-4 pr-14 text-slate-900 outline-none transition focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             />
             <button
               type="button"
