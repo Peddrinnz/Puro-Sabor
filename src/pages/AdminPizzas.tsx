@@ -166,6 +166,7 @@ const AdminPizzas: React.FC = () => {
       formData.append('description', form.description.trim())
       formData.append('price', String(Number(form.price)))
       formData.append('available', String(form.available))
+      // API expects ingredients[] for multipart FormData (processFormDataFields converts it to array)
       ingredients.forEach((ingredient) => formData.append('ingredients[]', ingredient))
       formData.append('image', imageFile)
       payload = formData

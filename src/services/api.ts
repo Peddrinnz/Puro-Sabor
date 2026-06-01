@@ -13,8 +13,9 @@ export function getImageUrl(image?: string | null): string {
   if (typeof image !== 'string') return ''
   const trimmed = image.trim()
   if (!trimmed) return ''
-  if (trimmed.startsWith('http') || trimmed.startsWith('data:') || trimmed.startsWith('/')) return trimmed
-  return `${API_BASE.replace(/\/$/, '')}/uploads/${trimmed}`
+  if (trimmed.startsWith('http') || trimmed.startsWith('data:')) return trimmed
+  if (trimmed.startsWith('/')) return trimmed
+  return `/uploads/${trimmed}`
 }
 
 api.interceptors.request.use((config) => {
