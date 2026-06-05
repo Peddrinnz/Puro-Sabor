@@ -95,17 +95,12 @@ const AdminPizzas: React.FC = () => {
       } catch (err) {
         latestError = err
 
-        // Some backends don't accept PUT with multipart/form-data. If we're
-        // sending FormData, try POST as a fallback to the same route.
         try {
           if (pizzaData instanceof FormData) {
-            // Try POST to the same route first (some servers accept POST).
             try {
               const postRes = await api.post(route, pizzaData)
               return postRes.data
             } catch (errPostSame) {
-              // If POST to /admin/pizzas/:id is rejected, try POST to the base
-              // collection route (e.g. /admin/pizzas) and include the id in the form.
               const baseRoute = route.replace(new RegExp(`/${pizzaId}$`), '')
               const copy = new FormData()
               for (const [key, val] of (pizzaData as FormData).entries()) {
@@ -166,7 +161,6 @@ const AdminPizzas: React.FC = () => {
       formData.append('description', form.description.trim())
       formData.append('price', String(Number(form.price)))
       formData.append('available', String(form.available))
-      // API expects ingredients[] for multipart FormData (processFormDataFields converts it to array)
       ingredients.forEach((ingredient) => formData.append('ingredients[]', ingredient))
       formData.append('image', imageFile)
       payload = formData
