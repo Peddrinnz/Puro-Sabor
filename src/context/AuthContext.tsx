@@ -72,7 +72,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await api.get('/users/profile')
       const nextUser = (res.data?.user ?? res.data) as User
       updateUser(nextUser)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_err) {
       setUser(null)
       localStorage.removeItem(storageUserKey)
@@ -83,7 +82,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (token) {
       localStorage.setItem('puro_sabor_token', token)
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       void refreshUser()
     } else {
       localStorage.removeItem('puro_sabor_token')
@@ -140,7 +138,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   )
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error('useAuth must be used within AuthProvider')
